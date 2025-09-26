@@ -14,8 +14,8 @@ app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')
 # Configure Gemini API
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
 
-# Initialize the model
-model = genai.GenerativeModel('gemini-1.5-pro')
+# Initialize the model updated to latest - this probs needs to be kept an eye on
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 # Environmental impact data (approximate CO2 emissions per token)
 # These are rough estimates based on research - actual values vary by model and infrastructure
