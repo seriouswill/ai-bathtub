@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bathtub - Environmental Impact Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚿 AI Bathtub</h1>
+            <p class="subtitle">Ask Gemini anything, but watch the bathtub fill up!</p>
+            <p class="mission">Your mission: Get a report on environmental impacts of LLM use without overflowing the bathtub.</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Bathtub Visualization -->
+            <div class="bathtub-section">
+                <div class="bathtub-container">
+                    <div class="bathtub">
+                        <div class="water" id="water-level">
+                            <div class="water-ripple"></div>
+                            <div class="water-ripple delay-1"></div>
+                            <div class="water-ripple delay-2"></div>
+                        </div>
+                        <div class="bathtub-rim"></div>
+                        <div class="bathtub-drain"></div>
+                    </div>
+                    <div class="water-level-indicator">
+                        <span id="water-percentage">0%</span>
+                    </div>
+                </div>
+                
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <span class="stat-label">Tokens Used:</span>
+                        <span class="stat-value" id="total-tokens">{{ total_tokens }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">CO₂ Emitted:</span>
+                        <span class="stat-value" id="total-co2">{{ "%.6f"|format(total_co2) }} kg</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Water Used:</span>
+                        <span class="stat-value" id="total-water">{{ "%.1f"|format(total_water) }} ml</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Capacity:</span>
+                        <span class="stat-value">{{ bathtub_capacity }} tokens</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="chat-section">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <div class="message-content">
+                                <p>👋 Welcome! Ask me anything, but remember - each question fills the bathtub with water based on token usage. Try to get a comprehensive report on environmental impacts of LLM use without overflowing!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <form id="chat-form">
+                            <div class="input-group">
+                                <input type="text" id="question-input" placeholder="Ask Gemini anything..." required>
+                                <button type="submit" id="send-button">
+                                    <span>Send</span>
+                                    <div class="loading-spinner" id="loading-spinner"></div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="reset-button" class="btn-secondary">🔄 Reset Bathtub</button>
+            <button id="history-button" class="btn-secondary">📋 View History</button>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Conversation History</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body" id="history-content">
+                    <!-- History content will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Overflow Warning -->
+        <div id="overflow-warning" class="overflow-warning hidden">
+            <div class="warning-content">
+                <h3>⚠️ Bathtub Overflow!</h3>
+                <p>The bathtub has overflowed! You've exceeded the token limit.</p>
+                <button id="acknowledge-overflow" class="btn-primary">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html> 
